@@ -120,7 +120,7 @@ func createBondedLink(bondName string, bondMode string, bondMiimon string, failO
 		return nil, fmt.Errorf("Failed to add link (%+v) to the netNsHandle, error: %+v", bondLinkObj.Attrs().Name, err)
 	}
 
-	return bondLinkObj, netlink.LinkSetUp(bondLinkObj)
+	return bondLinkObj, nil
 }
 
 // loop over the linkObjectsToBond, set each DOWN, update the interface MASTER & set it UP again.
@@ -263,6 +263,10 @@ func createBond(bondConf *bondingConfig, nspath string, ns ns.NetNS) (*current.I
 	err = attachLinksToBond(bondLinkObj, linkObjectsToBond, netNsHandle)
 	if err != nil {
 		return nil, fmt.Errorf("Failed to attached links to bond, error: %+v", err)
+	}
+
+	if err := netlink.LinkSetUp(bondLinkObj); err != nil {
+		return nil, fmt.Errorf("Failed to set bond link UP, error: %v", err)
 	}
 
 	bond.Name = bondConf.Name
