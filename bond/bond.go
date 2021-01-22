@@ -78,7 +78,7 @@ func getLinkObjectsFromConfig(bondConf *bondingConfig, netNsHandle *netlink.Hand
 		linkNames = append(linkNames, s)
 	}
 	linkObjectsToBond := []netlink.Link{}
-	if len(linkNames) < 2 { // currently supporting two or more links to one bond
+	if len(linkNames) >= 2 { // currently supporting two or more links to one bond
 		for _, linkName := range linkNames {
 			linkObject, err := checkLinkExists(linkName, netNsHandle)
 			if err != nil {
@@ -194,7 +194,7 @@ func setLinksinNetNs(bondConf *bondingConfig, nspath string, releaseLinks bool) 
 		}
 	}
 
-	if len(linkNames) < 2 { // currently supporting two or more links to one bond
+	if len(linkNames) >= 2 { // currently supporting two or more links to one bond
 		for _, linkName := range linkNames {
 			// get interface link in the network namespace
 			link, err := netlink.LinkByName(linkName)
