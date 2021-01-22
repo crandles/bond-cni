@@ -265,7 +265,7 @@ func createBond(bondConf *bondingConfig, nspath string, ns ns.NetNS) (*current.I
 		return nil, fmt.Errorf("Failed to attached links to bond, error: %+v", err)
 	}
 
-	if err := netlink.LinkSetUp(bondLinkObj); err != nil {
+	if err := netNsHandle.LinkSetUp(bondLinkObj); err != nil {
 		return nil, fmt.Errorf("Failed to set bond link UP, error: %v", err)
 	}
 
