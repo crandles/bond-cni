@@ -120,7 +120,7 @@ func createBondedLink(bondName string, bondMode string, bondMiimon string, failO
 		return nil, fmt.Errorf("Failed to add link (%+v) to the netNsHandle, error: %+v", bondLinkObj.Attrs().Name, err)
 	}
 
-	return bondLinkObj, nil
+	return bondLinkObj, netlink.LinkSetUp(bondLinkObj)
 }
 
 // loop over the linkObjectsToBond, set each DOWN, update the interface MASTER & set it UP again.
