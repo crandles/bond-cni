@@ -1,4 +1,4 @@
-module github.com/crandles/bond-cni
+module github.com/intel/bond-cni
 
 go 1.13
 
